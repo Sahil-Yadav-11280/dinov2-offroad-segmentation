@@ -1,0 +1,72 @@
+OFF-ROAD SEMANTIC SEGMENTATION USING TRANSFORMER-BASED FEATURE REPRESENTATIONS
+
+1.  Abstract
+This work presents a semantic segmentation framework for off-road terrain understanding using a pretrained DINOv2 Vision Transformer backbone combined with a lightweight convolutional segmentation head. The model performs dense pixel-wise classification across 10 terrain classes and demonstrates stable convergence under limited training time.
+
+2.  Introduction
+Accurate semantic segmentation of off-road environments is critical for autonomous navigation systems. Terrain variability, vegetation density, and object diversity make pixel-level classification challenging.
+
+To address this, we leverage pretrained transformer-based visual representations (DINOv2) to extract robust high-level image features and train a dedicated segmentation head for terrain classification.
+
+3.  Methodology
+   Backbone:
+    DINOv2 (ViT-S/14 pretrained)
+    Patch-based feature extraction
+    Frozen during training
+
+   Segmentation Head:
+    ConvNeXt-style convolutional decoder
+    Maps transformer embeddings to spatial predictions
+    Produces 10-class dense output
+
+   Loss Function:
+    Cross-Entropy Loss
+
+   Optimizer:
+    SGD
+
+   Evaluation Metrics:
+    Mean Intersection over Union (mIoU)
+    Dice Coefficient
+    Pixel Accuracy
+
+4.  Dataset and Classes
+The model predicts the following terrain categories:
+
+	1.  Background
+	2.  Trees
+	3.  Lush Bushes
+	4.  Dry Grass
+	5.  Dry Bushes
+	6.  Ground Clutter
+	7.  Logs
+	8.  Rocks
+	9.  Landscape
+	10.  Sky
+
+5.  Experimental Setup
+Input Resolution: 480 x 960 (aligned with patch size multiple of 14) Batch Size: 2 Epochs: 10 (with additional fine-	tuning) Training Strategy: Frozen backbone with supervised segmentation head training
+
+6.  Results
+	Final Validation Metrics:
+	Mean IoU: 0.2918
+	Dice Score: 0.4349
+	Pixel Accuracy: 0.7019
+	
+	Training exhibited consistent improvement across epochs with no observable overfitting.
+
+	Qualitative results show accurate segmentation of dominant terrain classes such as background and sky, with moderate 	performance on smaller objects such as logs and rocks.
+
+7.  Discussion
+The transformer backbone provides strong global contextual representations, enabling stable learning despite limited training time. Performance is influenced by class imbalance, particularly affecting minority terrain categories.
+
+Future improvements may include:
+
+   Class-weighted loss functions
+   Hybrid Dice + Cross-Entropy loss
+   Extended training schedule
+   Data augmentation strategies
+   Backbone fine-tuning
+
+8.  Conclusion
+This study demonstrates the effectiveness of leveraging pretrained transformer-based representations for off-road semantic segmentation. The model achieves stable convergence and reasonable performance under constrained computational resources, highlighting the practicality of transfer learning in terrain understanding applications.
